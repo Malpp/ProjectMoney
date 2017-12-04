@@ -1,0 +1,30 @@
+<html>
+	<head>
+	<title>Chat Room</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	</head>
+	<body>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var money = 53;
+		var socket = io.connect('http://127.0.0.1:5000');
+		socket.on('message', function(msg) {
+			if(parseInt(msg)){				
+				$("#messages").append('<li>Sent amount: '+msg+'$</li>');
+				money -= parseInt(msg);
+				$("#balance").html(money + '$');
+			}
+		});
+		$('#sendbutton').on('click', function() {
+			socket.send("10");
+		});
+	});
+	</script>
+	<h1 id="balance">53$</h1>
+	<ul id="messages"></ul>
+	<img src="qr.png" alt="" style="max-height: 500px">
+	<br>
+	<button id="sendbutton">Send</button>
+	</body>
+	</html>
